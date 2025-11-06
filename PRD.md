@@ -13,25 +13,25 @@ A tool to help determine whether an all-you-can-drink plan (nomihoudai) is cost-
 ## Essential Features
 
 ### Cost Comparison Calculator
-- **Functionality**: Calculates per-person cost for seniors with and without all-you-can-drink plan
-- **Purpose**: Helps decision-makers quickly determine the most economical option
-- **Trigger**: User inputs party details (number of juniors, seniors, costs)
-- **Progression**: Enter party size → Enter junior payment amount → Enter costs with/without nomihoudai → View comparison → See clear recommendation
-- **Success criteria**: Accurate calculation showing senior per-person cost in both scenarios with a clear recommendation
+- **Functionality**: Calculates per-person cost for seniors with and without all-you-can-drink plan, automatically computing total costs from input parameters
+- **Purpose**: Helps decision-makers quickly determine the most economical option without needing to manually calculate total bills
+- **Trigger**: User inputs party details and food/drink parameters
+- **Progression**: Enter party size → Enter food cost per person and drink consumption patterns → Enter drink pricing → View automatic total calculation → View per-person senior cost comparison → See clear recommendation
+- **Success criteria**: Accurate automatic calculation of total bills (with and without nomihoudai) showing senior per-person cost in both scenarios with a clear recommendation and breakdown of how totals were computed
 
 ### Party Composition Input
-- **Functionality**: Input fields for number of juniors and seniors, junior payment amount, and drink pricing parameters
-- **Purpose**: Define the party structure and pricing model for accurate cost splitting
-- **Trigger**: Page load shows empty input fields with sensible defaults for drink prices
-- **Progression**: User enters numbers → Adjusts drink prices if needed → Values update in real-time → Validation ensures positive integers
-- **Success criteria**: Clean numeric input with clear labels in Japanese context, default values that match typical restaurant pricing
+- **Functionality**: Input fields for number of juniors and seniors, junior payment amount
+- **Purpose**: Define the party structure for accurate cost splitting
+- **Trigger**: Page load shows empty input fields with sensible defaults
+- **Progression**: User enters numbers → Values update in real-time → Validation ensures positive integers
+- **Success criteria**: Clean numeric input with clear labels in Japanese context, default junior payment of ¥1,000
 
-### Cost Input Fields
-- **Functionality**: Input total bill amounts for both scenarios and drink pricing parameters
-- **Purpose**: Compare actual pricing from restaurant menu or quote with customizable drink prices
+### Food and Drink Parameter Input
+- **Functionality**: Input fields for food cost per person, number of drinks per person (alcohol and soft drinks), and pricing for individual drinks and nomihoudai
+- **Purpose**: Calculate total costs automatically based on realistic party parameters instead of requiring manual total calculation
 - **Trigger**: User has party composition entered
-- **Progression**: Enter drink prices (nomihoudai per person, alcohol price, soft drink price) → Enter total without nomihoudai → Enter total with nomihoudai → See real-time calculation
-- **Success criteria**: Clear yen currency formatting and intuitive input flow with sensible defaults (¥2,000 for nomihoudai, ¥500 for alcohol, ¥300 for soft drinks)
+- **Progression**: Enter food cost per person (default ¥3,000) → Enter average drinks per person (4 alcohol, 2 soft drinks) → Adjust drink prices if needed (alcohol ¥500, soft drink ¥300, nomihoudai ¥2,000) → Total costs calculated automatically → See real-time comparison
+- **Success criteria**: Sensible defaults matching typical izakaya pricing (especially chains like Mirai Saka), automatic calculation of totals with and without nomihoudai, clear breakdown showing how totals are computed
 
 ### Results Display
 - **Functionality**: Shows senior per-person cost for both scenarios with difference highlighted
@@ -43,10 +43,11 @@ A tool to help determine whether an all-you-can-drink plan (nomihoudai) is cost-
 ## Edge Case Handling
 
 - **Zero or negative values**: Prevent submission and show validation hint
-- **No seniors**: Show message that calculation requires at least one senior
-- **Junior payment exceeds total**: Alert that juniors' payment cannot exceed total bill
+- **No seniors**: Show message that calculation requires at least one senior  
+- **Junior payment exceeds total**: Alert that juniors' payment cannot exceed calculated total bill
 - **Equal costs**: Indicate no financial difference, choice is based on preference
 - **Very large numbers**: Handle calculations without breaking, format large yen amounts properly
+- **Zero drinks or food**: Handle edge cases where someone inputs 0 for drinks or food gracefully
 
 ## Design Direction
 
