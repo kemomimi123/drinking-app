@@ -18,6 +18,9 @@ function App() {
   const [juniorPayment, setJuniorPayment] = useState<string>('1000')
   const [costWithout, setCostWithout] = useState<string>('')
   const [costWith, setCostWith] = useState<string>('')
+  const [nomihoudaiPrice, setNomihoudaiPrice] = useState<string>('2000')
+  const [alcoholPrice, setAlcoholPrice] = useState<string>('500')
+  const [softDrinkPrice, setSoftDrinkPrice] = useState<string>('300')
   const [isHelpOpen, setIsHelpOpen] = useState(false)
 
   const parseNumber = (value: string): number => {
@@ -34,6 +37,9 @@ function App() {
   const juniorPay = parseNumber(juniorPayment)
   const totalWithout = parseNumber(costWithout)
   const totalWith = parseNumber(costWith)
+  const nomihoudaiPerPerson = parseNumber(nomihoudaiPrice)
+  const alcoholPerDrink = parseNumber(alcoholPrice)
+  const softDrinkPerDrink = parseNumber(softDrinkPrice)
 
   const isValid = juniors >= 0 && seniors > 0 && juniorPay >= 0 && totalWithout > 0 && totalWith > 0
 
@@ -107,6 +113,18 @@ function App() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">2</span>
+                    ドリンク料金を設定
+                  </h3>
+                  <ul className="space-y-1 ml-8 text-muted-foreground">
+                    <li>• 飲み放題の1人あたり料金（デフォルト: ¥2,000）</li>
+                    <li>• 単品アルコール1杯の料金（デフォルト: ¥500）</li>
+                    <li>• 単品ソフトドリンク1杯の料金（デフォルト: ¥300）</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">3</span>
                     合計金額を入力
                   </h3>
                   <ul className="space-y-1 ml-8 text-muted-foreground">
@@ -117,7 +135,7 @@ function App() {
 
                 <div>
                   <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">3</span>
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">4</span>
                     結果を確認
                   </h3>
                   <p className="ml-8 text-muted-foreground">
@@ -133,7 +151,9 @@ function App() {
 
                 <div className="mt-3 p-3 bg-muted rounded-lg">
                   <p className="text-xs text-muted-foreground">
-                    <strong className="text-foreground">例:</strong> 新人2人（各¥1,000）、先輩3人、飲み放題なし¥10,000、飲み放題あり¥12,000の場合<br/>
+                    <strong className="text-foreground">例:</strong> 新人2人（各¥1,000）、先輩3人の場合<br/>
+                    飲み放題¥2,000/人、アルコール¥500/杯、ソフトドリンク¥300/杯<br/>
+                    飲み放題なし¥10,000、飲み放題あり¥12,000<br/>
                     → なし: (¥10,000 - ¥2,000) ÷ 3 = <strong className="text-foreground">¥2,667/人</strong><br/>
                     → あり: (¥12,000 - ¥2,000) ÷ 3 = <strong className="text-foreground">¥3,334/人</strong><br/>
                     → 結果: <strong className="text-success">飲み放題なしがお得</strong>
@@ -193,6 +213,62 @@ function App() {
                     placeholder="1000"
                     className="h-12 text-lg pl-8"
                   />
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
+            <div>
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <CurrencyCircleDollar size={24} weight="duotone" className="text-primary" />
+                ドリンク料金設定
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="nomihoudai-price" className="text-base">飲み放題（1人）</Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-lg">¥</span>
+                    <Input
+                      id="nomihoudai-price"
+                      type="number"
+                      min="0"
+                      value={nomihoudaiPrice}
+                      onChange={(e) => setNomihoudaiPrice(e.target.value)}
+                      placeholder="2000"
+                      className="h-12 text-lg pl-8"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="alcohol-price" className="text-base">単品アルコール</Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-lg">¥</span>
+                    <Input
+                      id="alcohol-price"
+                      type="number"
+                      min="0"
+                      value={alcoholPrice}
+                      onChange={(e) => setAlcoholPrice(e.target.value)}
+                      placeholder="500"
+                      className="h-12 text-lg pl-8"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="soft-drink-price" className="text-base">単品ソフトドリンク</Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-lg">¥</span>
+                    <Input
+                      id="soft-drink-price"
+                      type="number"
+                      min="0"
+                      value={softDrinkPrice}
+                      onChange={(e) => setSoftDrinkPrice(e.target.value)}
+                      placeholder="300"
+                      className="h-12 text-lg pl-8"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

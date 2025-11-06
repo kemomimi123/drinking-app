@@ -20,18 +20,18 @@ A tool to help determine whether an all-you-can-drink plan (nomihoudai) is cost-
 - **Success criteria**: Accurate calculation showing senior per-person cost in both scenarios with a clear recommendation
 
 ### Party Composition Input
-- **Functionality**: Input fields for number of juniors and seniors
-- **Purpose**: Define the party structure for accurate cost splitting
-- **Trigger**: Page load shows empty input fields
-- **Progression**: User enters numbers → Values update in real-time → Validation ensures positive integers
-- **Success criteria**: Clean numeric input with clear labels in Japanese context
+- **Functionality**: Input fields for number of juniors and seniors, junior payment amount, and drink pricing parameters
+- **Purpose**: Define the party structure and pricing model for accurate cost splitting
+- **Trigger**: Page load shows empty input fields with sensible defaults for drink prices
+- **Progression**: User enters numbers → Adjusts drink prices if needed → Values update in real-time → Validation ensures positive integers
+- **Success criteria**: Clean numeric input with clear labels in Japanese context, default values that match typical restaurant pricing
 
 ### Cost Input Fields
-- **Functionality**: Input total bill amounts for both scenarios
-- **Purpose**: Compare actual pricing from restaurant menu or quote
+- **Functionality**: Input total bill amounts for both scenarios and drink pricing parameters
+- **Purpose**: Compare actual pricing from restaurant menu or quote with customizable drink prices
 - **Trigger**: User has party composition entered
-- **Progression**: Enter total without nomihoudai → Enter total with nomihoudai → See real-time calculation
-- **Success criteria**: Clear yen currency formatting and intuitive input flow
+- **Progression**: Enter drink prices (nomihoudai per person, alcohol price, soft drink price) → Enter total without nomihoudai → Enter total with nomihoudai → See real-time calculation
+- **Success criteria**: Clear yen currency formatting and intuitive input flow with sensible defaults (¥2,000 for nomihoudai, ¥500 for alcohol, ¥300 for soft drinks)
 
 ### Results Display
 - **Functionality**: Shows senior per-person cost for both scenarios with difference highlighted
