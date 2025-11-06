@@ -4,8 +4,13 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
-import { Users, CurrencyCircleDollar, CheckCircle, Calculator } from '@phosphor-icons/react'
+import { Users, CurrencyCircleDollar, CheckCircle, Calculator, Info } from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 
 function App() {
   const [numJuniors, setNumJuniors] = useState<string>('')
@@ -13,6 +18,7 @@ function App() {
   const [juniorPayment, setJuniorPayment] = useState<string>('1000')
   const [costWithout, setCostWithout] = useState<string>('')
   const [costWith, setCostWith] = useState<string>('')
+  const [isHelpOpen, setIsHelpOpen] = useState(false)
 
   const parseNumber = (value: string): number => {
     const parsed = parseInt(value) || 0
@@ -67,6 +73,76 @@ function App() {
             先輩の1人あたり支払額を比較して、飲み放題にするべきか判定します
           </p>
         </div>
+
+        <Collapsible open={isHelpOpen} onOpenChange={setIsHelpOpen} className="mb-6">
+          <Card className="overflow-hidden">
+            <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-accent/50 transition-colors">
+              <div className="flex items-center gap-2">
+                <Info size={20} weight="duotone" className="text-primary" />
+                <span className="font-semibold text-foreground">使い方</span>
+              </div>
+              <motion.div
+                animate={{ rotate: isHelpOpen ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </motion.div>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="p-6 pt-0 space-y-4 text-sm">
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">1</span>
+                    参加者の情報を入力
+                  </h3>
+                  <ul className="space-y-1 ml-8 text-muted-foreground">
+                    <li>• 新人の人数（支払額が安い人）</li>
+                    <li>• 先輩の人数（比較対象となる人）</li>
+                    <li>• 新人1人あたりの支払額（デフォルト: ¥1,000）</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">2</span>
+                    合計金額を入力
+                  </h3>
+                  <ul className="space-y-1 ml-8 text-muted-foreground">
+                    <li>• 飲み放題なしの合計金額</li>
+                    <li>• 飲み放題ありの合計金額</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">3</span>
+                    結果を確認
+                  </h3>
+                  <p className="ml-8 text-muted-foreground">
+                    先輩1人あたりの支払額を自動計算し、どちらがお得か判定します。
+                  </p>
+                </div>
+
+                <div className="mt-4 p-3 bg-accent/30 rounded-lg">
+                  <p className="text-xs text-muted-foreground">
+                    <strong className="text-foreground">計算方法:</strong> 合計金額から新人の支払い総額を引いた残りを先輩の人数で割って、1人あたりの金額を算出します。
+                  </p>
+                </div>
+
+                <div className="mt-3 p-3 bg-muted rounded-lg">
+                  <p className="text-xs text-muted-foreground">
+                    <strong className="text-foreground">例:</strong> 新人2人（各¥1,000）、先輩3人、飲み放題なし¥10,000、飲み放題あり¥12,000の場合<br/>
+                    → なし: (¥10,000 - ¥2,000) ÷ 3 = <strong className="text-foreground">¥2,667/人</strong><br/>
+                    → あり: (¥12,000 - ¥2,000) ÷ 3 = <strong className="text-foreground">¥3,334/人</strong><br/>
+                    → 結果: <strong className="text-success">飲み放題なしがお得</strong>
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
 
         <Card className="p-6 md:p-8 shadow-lg">
           <div className="space-y-6">
